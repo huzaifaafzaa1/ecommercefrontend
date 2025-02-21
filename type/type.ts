@@ -1,6 +1,6 @@
 export interface Rating {
   rate: number;
-  count: number;
+  count: string;
 }
 
 export interface Category {
