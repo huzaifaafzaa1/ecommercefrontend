@@ -10,7 +10,6 @@ import "react-toastify/dist/ReactToastify.css";
 import BagProduct from "./BagProduct"; // Import the new BagProduct component
 import { selectBagProducts } from "../app/redux/selector";
 
-
 const Bag: React.FC = () => {
   const bagProducts = useSelector(selectBagProducts); // using selector function
 
@@ -24,7 +23,7 @@ const Bag: React.FC = () => {
 
   const itemsTotal = bagProducts.reduce(
     (acc, product) => acc + product.price * (product.count || 1),
-    0
+    0,
   );
 
   const estimatedGST = (itemsTotal * GST_PERCENTAGE) / 100;
@@ -65,7 +64,7 @@ const Bag: React.FC = () => {
           <div className="grid grid-cols-3 gap-2 my-2">
             {bagProducts.length > 0 ? (
               bagProducts.map((product, index) => (
-                <BagProduct key={index} product={product} />   //we are passing product prop mean the product that are in the bag
+                <BagProduct key={index} product={product} /> //we are passing product prop mean the product that are in the bag
               ))
             ) : (
               <p className="font-cabin col-span-3 text-center text-darkgrey">
@@ -126,7 +125,7 @@ const Bag: React.FC = () => {
             </div>
           ) : (
             <Link
-              href="/bagItems"   // button link to move from one page to another
+              href="/bagItems" // button link to move from one page to another
               className="bg-gray-900 px-4 text-white rounded-xl flex justify-center items-center gap-3"
             >
               <IoBagHandleOutline className="h-8" />

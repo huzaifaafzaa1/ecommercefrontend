@@ -1,31 +1,27 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   AudioWaveform,
-  BookOpen,
   Bot,
   Command,
-  Frame,
   GalleryVerticalEnd,
   Map,
-  PieChart,
-  Settings2,
   SquareTerminal,
   Home,
-} from "lucide-react"
+} from "lucide-react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavProjects } from "@/components/nav-projects"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+import { NavProjects } from "@/components/nav-projects";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 // This is sample data.
 const data = {
@@ -58,11 +54,11 @@ const data = {
       icon: Bot,
       items: [
         {
-          title: "Add Product", 
+          title: "Add Product",
           url: "/dashboard/products/add",
         },
         {
-          title: "All Products", 
+          title: "All Products",
           url: "/dashboard/products/all",
         },
       ],
@@ -73,12 +69,12 @@ const data = {
       icon: Map,
       items: [
         {
-          title: "Add Categories", 
+          title: "Add Categories",
           url: "/dashboard/categories/add",
         },
         {
-          title: "All Categories", 
-          url:"/dashboard/categories/all" ,
+          title: "All Categories",
+          url: "/dashboard/categories/all",
         },
       ],
     },
@@ -95,9 +91,7 @@ const data = {
       icon: Home,
     },
   ],
-  
 };
-
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -114,5 +108,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

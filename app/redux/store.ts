@@ -1,19 +1,18 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import productsReducer from '../redux/productsSlice';
-import bagReducer from '../redux/bagSlice'
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
-
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import productsReducer from "../redux/productsSlice";
+import bagReducer from "../redux/bagSlice";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 const persistConfig = {
-  key: 'persist-root',
+  key: "persist-root",
   storage,
 };
 
 // Combine reducers first
 const rootReducer = combineReducers({
-    productsStore: productsReducer,
-    bag: bagReducer
+  productsStore: productsReducer,
+  bag: bagReducer,
 });
 
 // Then create persisted reducer
@@ -25,7 +24,7 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
       },
     }),
 });

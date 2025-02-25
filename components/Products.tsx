@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,7 +6,7 @@ import Link from "next/link";
 import "react-toastify/dist/ReactToastify.css";
 import { setProducts } from "../app/redux/productsSlice";
 import { addToBag } from "../app/redux/bagSlice";
-import { selectBagProducts, selectProducts} from "../app/redux/selector";
+import { selectBagProducts, selectProducts } from "../app/redux/selector";
 import ProductCard from "./ProductCard";
 import { MdOutlineCancelPresentation } from "react-icons/md";
 import { Product, BagProduct } from "../type/type"; // Import BagProduct type from type.ts
@@ -14,35 +14,32 @@ import API from "@/lib/axiosInstance";
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const bagProducts = useSelector(selectBagProducts);    // using selector function
-  const products = useSelector(selectProducts);          // using selector function
+  const bagProducts = useSelector(selectBagProducts); // using selector function
+  const products = useSelector(selectProducts); // using selector function
   const dispatch = useDispatch();
 
   const API_URL = "/products"; // Only the endpoint since baseURL is already set in axios.tsx
 
-  
-    async function fetchData() {
-      try {
-        let response = await API.get(API_URL); // Using the configured Axios instance
-        let data: Product[] = response.data;  // Explicitly defining the type  
-    
-        // Adding custom properties to the fakestore API data
-        const updatedData: BagProduct[] = data.map((product) => ({
-          ...product,
-          count: 0, // Now the product has a 'count' field
-        }));
-        dispatch(setProducts(updatedData)); // Now it's within the try block, so no error
-      } 
-      catch (error) {
-        console.error(error);
-      }
+  async function fetchData() {
+    try {
+      const response = await API.get(API_URL); // Using the configured Axios instance
+      const data: Product[] = response.data; // Explicitly defining the type
+
+      // Adding custom properties to the fakestore API data
+      const updatedData: BagProduct[] = data.map((product) => ({
+        ...product,
+        count: 0, // Now the product has a 'count' field
+      }));
+      dispatch(setProducts(updatedData)); // Now it's within the try block, so no error
+    } catch (error) {
+      console.error(error);
     }
-  
+  }
 
   const filteredProducts = products.filter(
     (product) =>
       product.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.category.name.toLowerCase().includes(searchTerm.toLowerCase())
+      product.category.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleClearSearch = () => {
@@ -56,9 +53,8 @@ const Products = () => {
       setSearchTerm(savedSearchTerm);
     }
     // console.log("fetching data")
-    fetchData();     
-
-  }, [dispatch]);
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (searchTerm) {
@@ -68,7 +64,6 @@ const Products = () => {
 
   return (
     <div className="productContainer flex flex-col items-center w-[66%]">
-      
       {/* search container */}
       <div className="searchcontainer w-1/2 mx-auto my-5 p-2">
         <label className="text-darkgrey font-cabin">Search Item</label>
@@ -91,29 +86,27 @@ const Products = () => {
         </div>
       </div>
 
-      
-{/* products */}
-    <div className="flex justify-center items-center w-[95%] my-4">
-      <div className="products grid grid-cols-4 gap-4 justify-center items-center w-full min-h-[300px]">
-        {filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
-        <Link key={product._id} href={`${product._id}`}>
-          <ProductCard
-            product={product}
-            bagProducts={bagProducts}
-            dispatch={dispatch}
-            addToBag={addToBag}
-          />
-        </Link>
-        ))
-      ) : (
-       <div className="col-span-4 text-center text-gray-500 text-xl">
-        No products found.
-       </div>
-       )}
+      {/* products */}
+      <div className="flex justify-center items-center w-[95%] my-4">
+        <div className="products grid grid-cols-4 gap-4 justify-center items-center w-full min-h-[300px]">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <Link key={product._id} href={`${product._id}`}>
+                <ProductCard
+                  product={product}
+                  bagProducts={bagProducts}
+                  dispatch={dispatch}
+                  addToBag={addToBag}
+                />
+              </Link>
+            ))
+          ) : (
+            <div className="col-span-4 text-center text-gray-500 text-xl">
+              No products found.
+            </div>
+          )}
+        </div>
       </div>
-    </div>
-
     </div>
   );
 };

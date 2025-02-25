@@ -12,13 +12,20 @@ interface ProductCardProps {
   addToBag: typeof addToBag;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, bagProducts, dispatch, addToBag }) => {
+const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  bagProducts,
+  dispatch,
+  addToBag,
+}) => {
   const handleAddToBag = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();
 
     // Check if the product is already in the bag
-    const existingProduct = bagProducts.find((item) => item._id === (product._id + 10));
+    const existingProduct = bagProducts.find(
+      (item) => item._id === product._id,
+    );
     if (existingProduct) {
       toast.error("This product is already in your bag!");
     } else {

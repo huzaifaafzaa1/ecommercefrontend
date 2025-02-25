@@ -13,9 +13,10 @@ const bagSlice = createSlice({
   initialState,
   name: "bag",
   reducers: {
-    addToBag: (state, action: PayloadAction<BagProduct>) => { // Use BagProduct
+    addToBag: (state, action: PayloadAction<BagProduct>) => {
+      // Use BagProduct
       const existingProduct = state.bagProducts.find(
-        (product) => product._id === action.payload._id
+        (product) => product._id === action.payload._id,
       );
       if (!existingProduct) {
         // Add product with initial count of 1
@@ -25,7 +26,7 @@ const bagSlice = createSlice({
 
     increaseCount: (state, action: PayloadAction<string>) => {
       const product = state.bagProducts.find(
-        (item) => item._id === action.payload
+        (item) => item._id === action.payload,
       );
       if (product) {
         product.count += 1;
@@ -34,25 +35,26 @@ const bagSlice = createSlice({
 
     decreaseCount: (state, action: PayloadAction<string>) => {
       const product = state.bagProducts.find(
-        (item) => item._id === action.payload
+        (item) => item._id === action.payload,
       );
       if (product && product.count > 1) {
         product.count -= 1;
       } else {
         // Remove the product if count is 0
         state.bagProducts = state.bagProducts.filter(
-          (item) => item._id !== action.payload
+          (item) => item._id !== action.payload,
         );
       }
     },
 
     removeFromBag: (state, action: PayloadAction<string>) => {
       state.bagProducts = state.bagProducts.filter(
-        (item) => item._id !== action.payload
+        (item) => item._id !== action.payload,
       );
     },
   },
 });
 
-export const { addToBag, increaseCount, decreaseCount, removeFromBag } = bagSlice.actions;
+export const { addToBag, increaseCount, decreaseCount, removeFromBag } =
+  bagSlice.actions;
 export default bagSlice.reducer;

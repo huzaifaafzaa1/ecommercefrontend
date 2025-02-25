@@ -1,26 +1,25 @@
 "use client";
 
-import { useState } from "react";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { cn } from "@/lib/utils";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCategories } from '@/hooks/useCategory'; // Import the custom hook
+import { useCategories } from "@/hooks/useCategory"; // Import the custom hook
 
 const formSchema = z.object({
-  categoryname: z.string()
+  categoryname: z
+    .string()
     .min(1, "Category name is required")
     .refine((val) => isNaN(Number(val)), {
       message: "Category name must be a string, not a number",
@@ -40,16 +39,19 @@ export default function AddCategoryForm() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       // Call the createCategory mutation
-      createCategory({ name: values.categoryname, products: [] }, {
-        onSuccess: () => {
-          toast.success("Category added successfully!");
-          form.reset(); // Reset the form after successful submission
+      createCategory(
+        { name: values.categoryname, products: [] },
+        {
+          onSuccess: () => {
+            toast.success("Category added successfully!");
+            form.reset(); // Reset the form after successful submission
+          },
+          onError: (error) => {
+            toast.error("Failed to add category. Please try again.");
+            console.error("Error adding category:", error);
+          },
         },
-        onError: (error) => {
-          toast.error("Failed to add category. Please try again.");
-          console.error("Error adding category:", error);
-        },
-      });
+      );
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");

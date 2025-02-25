@@ -1,5 +1,5 @@
 "use client";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useProduct } from "@/hooks/useProduct";
 import { useCategories } from "@/hooks/useCategory";
 import { toast } from "sonner";
@@ -44,16 +44,15 @@ const formSchema = z.object({
 });
 
 export default function AddProductPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  const { categories, loading } = useCategories();
+  const { categories } = useCategories();
 
-  const { getProductQuery, addProductMutation, updateProductMutation } = useProduct();
+  const { getProductQuery, addProductMutation, updateProductMutation } =
+    useProduct();
   const { data: product, isLoading } = getProductQuery(id);
 
   const mode = id ? "edit" : "add";
-  
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -88,7 +87,7 @@ export default function AddProductPage() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     const selectedCategory = categories.find(
-      (cat) => cat._id === values.category._id
+      (cat) => cat._id === values.category._id,
     );
 
     if (!selectedCategory) {
@@ -109,7 +108,7 @@ export default function AddProductPage() {
     };
 
     if (mode === "add") {
-      addProductMutation.mutate(productData);
+      addProductMutation.mutate(productData); // You trigger the mutation using .mutate(), passing productData as an argument.This executes the function inside useMutation, which is addProduct.
     } else if (mode === "edit" && product?._id) {
       updateProductMutation.mutate({
         id: product._id,
@@ -191,12 +190,14 @@ export default function AddProductPage() {
               <FormItem>
                 <FormLabel>Category</FormLabel>
                 <Select
-                  onValueChange={(value) => {     //value will have the value that we select from form i.e-(electronics mens etc)
-                    const selectedCategory = categories.find(        //categories will have the value stored in categories as it storeda as object it will also have id of object means whole object (mens,womens,jewelry,electronics)
-                      (cat) => cat._id === value                     // compare the category id with the value id 
+                  onValueChange={(value) => {
+                    //value will have the value that we select from form i.e-(electronics mens etc)
+                    const selectedCategory = categories.find(
+                      //categories will have the value stored in categories as it storeda as object it will also have id of object means whole object (mens,womens,jewelry,electronics)
+                      (cat) => cat._id === value, // compare the category id with the value id
                     );
                     if (selectedCategory) {
-                      field.onChange(selectedCategory);             // this line will select the category object and update the form state
+                      field.onChange(selectedCategory); // this line will select the category object and update the form state
                     }
                   }}
                   value={field.value?._id || ""}
@@ -209,7 +210,7 @@ export default function AddProductPage() {
                   <SelectContent>
                     {categories.map((category) => (
                       //"When a user selects a category from the dropdown, the selected category's _id is passed as the value. This helps us identify which category was chosen."
-                      <SelectItem key={category._id} value={category._id}>  
+                      <SelectItem key={category._id} value={category._id}>
                         {category.name}
                       </SelectItem>
                     ))}

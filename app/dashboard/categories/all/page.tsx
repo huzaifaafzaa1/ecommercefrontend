@@ -1,6 +1,6 @@
 "use client";
 
-import { useCategories } from '@/hooks/useCategory'; // Adjust the import according to your file structure
+import { useCategories } from "@/hooks/useCategory"; // Adjust the import according to your file structure
 import {
   Table,
   TableBody,

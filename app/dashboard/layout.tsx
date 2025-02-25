@@ -1,9 +1,13 @@
-'use client';
+"use client";
 
-import { ReactNode } from 'react';
-import { AppSidebar } from '@/components/app-sidebar';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { Separator } from '@/components/ui/separator';
+import { ReactNode } from "react";
+import { AppSidebar } from "@/components/app-sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
+import { Separator } from "@/components/ui/separator";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,7 +15,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+} from "@/components/ui/breadcrumb";
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -33,7 +37,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="#">Building Your Application</BreadcrumbLink>
+                  <BreadcrumbLink href="#">
+                    Building Your Application
+                  </BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
@@ -50,5 +56,3 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     </SidebarProvider>
   );
 }
-
-
